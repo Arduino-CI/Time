@@ -68,7 +68,10 @@ const char dayShortNames_P[] PROGMEM = "ErrSunMonTueWedThuFriSat";
 /* functions to return date strings */
 
 char *monthStr(uint8_t month) {
-  strcpy_P(buffer, (PGM_P)pgm_read_ptr(&(monthNames_P[month])));
+  const char *const *ptr = &(monthNames_P[month]);
+  unsigned long ul = (unsigned long)ptr;
+  uint16_t ptr16 = (uint16_t)(ul & 0xFFFF);
+  strcpy_P(buffer, (PGM_P)ptr16);
   return buffer;
 }
 
@@ -81,7 +84,11 @@ char *monthShortStr(uint8_t month) {
 }
 
 char *dayStr(uint8_t day) {
-  strcpy_P(buffer, (PGM_P)pgm_read_ptr(&(dayNames_P[day])));
+  // strcpy_P(buffer, (PGM_P)pgm_read_ptr(&(dayNames_P[day])));
+  const char *const *ptr = &(dayNames_P[day]);
+  unsigned long ul = (unsigned long)ptr;
+  uint16_t ptr16 = (uint16_t)(ul & 0xFFFF);
+  strcpy_P(buffer, (PGM_P)ptr16);
   return buffer;
 }
 

@@ -16,7 +16,12 @@
 #include <sys/types.h> // for __time_t_defined, but avr libc lacks sys/types.h
 #endif
 
-#if !defined(__time_t_defined) // avoid conflict with newlib or other posix libc
+
+#if (defined __apple_build_version__) && (__apple_build_version__ >= 12000000)
+// defined in
+// /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_types/_time_t.h:31:33
+#elif !defined(                                                                \
+    __time_t_defined) // avoid conflict with newlib or other posix libc
 typedef unsigned long time_t;
 #endif
 
