@@ -70,8 +70,8 @@ const char dayShortNames_P[] PROGMEM = "ErrSunMonTueWedThuFriSat";
 char *monthStr(uint8_t month) {
   const char *const *ptr = &(monthNames_P[month]);
   unsigned long ul = (unsigned long)ptr;
-  uint16_t ptr16 = (uint16_t)(ul & 0xFFFF);
-  strcpy_P(buffer, (PGM_P)ptr16);
+  uint32_t ptr32 = (uint32_t)(ul & 0xFFFFFFFF);
+  strcpy_P(buffer, (PGM_P)ptr32);
   return buffer;
 }
 
@@ -87,8 +87,8 @@ char *dayStr(uint8_t day) {
   // strcpy_P(buffer, (PGM_P)pgm_read_ptr(&(dayNames_P[day])));
   const char *const *ptr = &(dayNames_P[day]);
   unsigned long ul = (unsigned long)ptr;
-  uint16_t ptr16 = (uint16_t)(ul & 0xFFFF);
-  strcpy_P(buffer, (PGM_P)ptr16);
+  uint32_t ptr32 = (uint32_t)(ul & 0xFFFFFFFF);
+  strcpy_P(buffer, (PGM_P)ptr32);
   return buffer;
 }
 

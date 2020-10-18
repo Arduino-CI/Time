@@ -16,12 +16,13 @@
 #include <sys/types.h> // for __time_t_defined, but avr libc lacks sys/types.h
 #endif
 
-
 #if (defined __apple_build_version__) && (__apple_build_version__ >= 12000000)
 // defined in
 // /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_types/_time_t.h:31:33
-#elif !defined(                                                                \
-    __time_t_defined) // avoid conflict with newlib or other posix libc
+#elif __MSVCRT_VERSION__ < __MSVCR80_DLL || defined _USE_32BIT_TIME_T
+// defined in c:\mingw\include\sys\types.h:149
+#elif !defined(__time_t_defined)
+// avoid conflict with newlib or other posix libc
 typedef unsigned long time_t;
 #endif
 

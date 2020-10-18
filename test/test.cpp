@@ -7,3 +7,4 @@ unittest(test) {
 }
 
 unittest_main()
+// bundle exec arduino_ci_remote.rb --skip-compilation
