@@ -36,8 +36,6 @@ unittest(DefaultNow) {
 // year(t);          // the year for the given time t
 unittest(SpecifiedTime) {
   time_t t = 50 * 365 * 24 * 60 * 60;
-  std::cout << t << " " << year(t) << "-" << month(t) << "-" << day(t)
-            << std::endl;
   assertTrue(year(t) == 2019);
   assertTrue(hour(t) == 0);
   assertTrue(minute(t) == 0);
