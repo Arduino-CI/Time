@@ -1,3 +1,10 @@
+
+/*
+bundle config --local path vendor/bundle
+bundle install
+bundle exec arduino_ci_remote.rb --skip-compilation
+*/
+
 #include "Arduino.h"
 #include "ArduinoUnitTests.h"
 #include "TimeLib.h"
@@ -46,4 +53,3 @@ unittest(SpecifiedTime) {
 }
 
 unittest_main()
-    // bundle exec arduino_ci_remote.rb --skip-compilation

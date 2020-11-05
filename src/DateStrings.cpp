@@ -23,6 +23,17 @@
 
 #include "TimeLib.h"
 
+// create pointer
+#if UINTPTR_MAX == 0xFFFF
+typedef int16_t ptr_as_int;
+#elif UINTPTR_MAX == 0xFFFFFFFF
+typedef int32_t ptr_as_int;
+#elif UINTPTR_MAX == 0xFFFFFFFFFFFFFFFFu
+typedef int64_t ptr_as_int;
+#else
+#error unrecognized pointer size!
+#endif
+
 // the short strings for each day or month must be exactly dt_SHORT_STR_LEN
 #define dt_SHORT_STR_LEN 3 // the length of short strings
 
@@ -69,9 +80,8 @@ const char dayShortNames_P[] PROGMEM = "ErrSunMonTueWedThuFriSat";
 
 char *monthStr(uint8_t month) {
   const char *const *ptr = &(monthNames_P[month]);
-  unsigned long ul = (unsigned long)ptr;
-  uint32_t ptr32 = (uint32_t)(ul & 0xFFFFFFFF);
-  strcpy_P(buffer, (PGM_P)ptr32);
+  ptr_as_int src = (ptr_as_int)(ptr)&UINTPTR_MAX;
+  strcpy_P(buffer, (PGM_P)src);
   return buffer;
 }
 
@@ -86,9 +96,8 @@ char *monthShortStr(uint8_t month) {
 char *dayStr(uint8_t day) {
   // strcpy_P(buffer, (PGM_P)pgm_read_ptr(&(dayNames_P[day])));
   const char *const *ptr = &(dayNames_P[day]);
-  unsigned long ul = (unsigned long)ptr;
-  uint32_t ptr32 = (uint32_t)(ul & 0xFFFFFFFF);
-  strcpy_P(buffer, (PGM_P)ptr32);
+  ptr_as_int src = (ptr_as_int)(ptr)&UINTPTR_MAX;
+  strcpy_P(buffer, (PGM_P)src);
   return buffer;
 }
 
