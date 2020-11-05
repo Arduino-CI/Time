@@ -1,19 +1,20 @@
 /*
  * TimeRTC.pde
  * example code illustrating Time library with Real Time Clock.
- * 
+ *
  */
 
 #include <TimeLib.h>
 
-void setup()  {
+void setup() {
   // set the Time library to use Teensy 3.0's RTC to keep time
   setSyncProvider(getTeensy3Time);
 
   Serial.begin(115200);
-  while (!Serial);  // Wait for Arduino Serial Monitor to open
+  while (!Serial)
+    ; // Wait for Arduino Serial Monitor to open
   delay(100);
-  if (timeStatus()!= timeSet) {
+  if (timeStatus() != timeSet) {
     Serial.println("Unable to sync with the RTC");
   } else {
     Serial.println("RTC has set the system time");
@@ -28,7 +29,7 @@ void loop() {
       setTime(t);
     }
   }
-  digitalClockDisplay();  
+  digitalClockDisplay();
   delay(1000);
 }
 
@@ -42,37 +43,35 @@ void digitalClockDisplay() {
   Serial.print(" ");
   Serial.print(month());
   Serial.print(" ");
-  Serial.print(year()); 
-  Serial.println(); 
+  Serial.print(year());
+  Serial.println();
 }
 
-time_t getTeensy3Time()
-{
-  return Teensy3Clock.get();
-}
+time_t getTeensy3Time() { return Teensy3Clock.get(); }
 
 /*  code to process time sync messages from the serial port   */
-#define TIME_HEADER  "T"   // Header tag for serial time sync message
+#define TIME_HEADER "T" // Header tag for serial time sync message
 
 unsigned long processSyncMessage() {
   unsigned long pctime = 0L;
-  const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013 
+  const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013
 
-  if(Serial.find(TIME_HEADER)) {
-     pctime = Serial.parseInt();
-     return pctime;
-     if( pctime < DEFAULT_TIME) { // check the value is a valid time (greater than Jan 1 2013)
-       pctime = 0L; // return 0 to indicate that the time is not valid
-     }
+  if (Serial.find(TIME_HEADER)) {
+    pctime = Serial.parseInt();
+    return pctime;
+    if (pctime < DEFAULT_TIME) { // check the value is a valid time (greater
+                                 // than Jan 1 2013)
+      pctime = 0L; // return 0 to indicate that the time is not valid
+    }
   }
   return pctime;
 }
 
-void printDigits(int digits){
-  // utility function for digital clock display: prints preceding colon and leading 0
+void printDigits(int digits) {
+  // utility function for digital clock display: prints preceding colon and
+  // leading 0
   Serial.print(":");
-  if(digits < 10)
+  if (digits < 10)
     Serial.print('0');
   Serial.print(digits);
 }
-
