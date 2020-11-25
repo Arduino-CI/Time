@@ -1,19 +1,12 @@
-platforms:
-  mega2560:
-    board: arduino:avr:mega:cpu=atmega2560
-    package: arduino:avr
-    gcc:
-      features:
-      defines:
-        - __AVR_ATmega2560__
-        - ARDUINO_CI
-      warnings:
-      flags:
 
 unittest:
   platforms:
     - mega2560
+  libraries:
+    - "DS1307RTC"
 
 compile:
   platforms:
     - mega2560
+  libraries:
+    - "DS1307RTC"
